@@ -27,6 +27,9 @@ class Disertante
     private ?string $telefono = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $calles = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $url = null;
 
     #[ORM\Column(length: 255)]
@@ -87,6 +90,18 @@ class Disertante
     public function setTelefono(string $telefono): static
     {
         $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    public function getCalles(): ?string
+    {
+        return $this->calles;
+    }
+
+    public function setCalles(string $calles): static
+    {
+        $this->calles = $calles;
 
         return $this;
     }

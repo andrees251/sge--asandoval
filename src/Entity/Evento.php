@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Common\Util;
@@ -37,6 +39,21 @@ class Evento
     #[ORM\Column(length: 255)]
     private ?string $idioma = null;
 
+    #[ORM\ManyToOne(inversedBy: 'eventos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?disertante $disertante = null;
+
+    /**
+     * @var Collection<int, Usuario>
+     */
+    #[ORM\ManyToMany(targetEntity: Usuario::class, mappedBy: 'evento')]
+    private Collection $usuarios;
+
+    public function __construct()
+    {
+        $this->usuarios = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -48,12 +65,13 @@ class Evento
     }
 
     public function setTitulo(string $titulo): static
-    {
-        $this->titulo = $titulo;
-        $this->setSlug(Util::slugify($titulo));
+{
+    $this->titulo = $titulo;
 
-        return $this;
-    }
+    $this->slug = Util::slugify($titulo);
+
+    return $this;
+}
 
     public function getSlug(): ?string
     {
@@ -123,6 +141,45 @@ class Evento
     public function setIdioma(string $idioma): static
     {
         $this->idioma = $idioma;
+
+        return $this;
+    }
+
+    public function getDisertante(): ?disertante
+    {
+        return $this->disertante;
+    }
+
+    public function setDisertante(?disertante $disertante): static
+    {
+        $this->disertante = $disertante;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Usuario>
+     */
+    public function getUsuarios(): Collection
+    {
+        return $this->usuarios;
+    }
+
+    public function addUsuario(Usuario $usuario): static
+    {
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios->add($usuario);
+            $usuario->addEvento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsuario(Usuario $usuario): static
+    {
+        if ($this->usuarios->removeElement($usuario)) {
+            $usuario->removeEvento($this);
+        }
 
         return $this;
     }

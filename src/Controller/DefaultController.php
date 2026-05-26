@@ -15,7 +15,7 @@ class DefaultController extends AbstractController
         return $this->render('estatica/patrocinadores.html.twig');
     } */
 
-        #[Route(
+    /*     #[Route(
         '/sitio/{pagina}',
         name: 'app_estatica',
         defaults: ['pagina' => 'patrocinadores'],
@@ -26,5 +26,23 @@ class DefaultController extends AbstractController
     public function estatica(string $pagina): Response
     {
         return $this->render('estatica/' . $pagina . '.html.twig');
+    } */
+
+    #[Route('/', name: 'portada')]
+
+    public function portada(): Response
+    {
+        $em = $this->entityManager;
+
+        $eventos = $em->getRepository(Evento::class)->findAll();
+
+        shuffle($eventos);
+
+        $eventos = array_slice($eventos, 0, 8);
+
+        return $this->render('default/portada.html.twig', [
+            'eventosCol1' => array_slice($eventos, 0, 4),
+            'eventosCol2' => array_slice($eventos, 4, 4),
+        ]);
     }
 }

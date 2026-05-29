@@ -44,7 +44,7 @@ class DefaultController extends AbstractController
         $eventos = $em->getRepository(Evento::class)->findAll();
 
         shuffle($eventos);
-
+ 
         $eventos = array_slice($eventos, 0, 8);
 
         return $this->render('default/portada.html.twig', [

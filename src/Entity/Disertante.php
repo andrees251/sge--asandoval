@@ -46,7 +46,7 @@ class Disertante
     /**
      * @var Collection<int, Evento>
      */
-    #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'Disertante')]
+    #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'disertante')]
     private Collection $eventos;
 
     public function __construct()

@@ -5,17 +5,24 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Evento;
 
 class DefaultController extends AbstractController
 {
-    /* #[Route('/patrocinadores', name: 'app_patrocinadores')]
+    public function __construct(
+        private EntityManagerInterface $entityManager
+
+    ){}
+
+    #[Route('/patrocinadores', name: 'app_patrocinadores')]
 
     public function patrocinadores(): Response
     {
         return $this->render('estatica/patrocinadores.html.twig');
-    } */
+    }
 
-    /*     #[Route(
+         #[Route(
         '/sitio/{pagina}',
         name: 'app_estatica',
         defaults: ['pagina' => 'patrocinadores'],
@@ -26,9 +33,9 @@ class DefaultController extends AbstractController
     public function estatica(string $pagina): Response
     {
         return $this->render('estatica/' . $pagina . '.html.twig');
-    } */
+    }
 
-    #[Route('/', name: 'portada')]
+    #[Route('/', name: 'app_portada')]
 
     public function portada(): Response
     {

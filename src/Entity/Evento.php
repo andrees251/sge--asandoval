@@ -41,7 +41,7 @@ class Evento
 
     #[ORM\ManyToOne(inversedBy: 'eventos')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?disertante $disertante = null;
+    private ?Disertante $disertante = null;
 
     /**
      * @var Collection<int, Usuario>
@@ -145,12 +145,12 @@ class Evento
         return $this;
     }
 
-    public function getDisertante(): ?disertante
+    public function getDisertante(): ?Disertante
     {
         return $this->disertante;
     }
 
-    public function setDisertante(?disertante $disertante): static
+    public function setDisertante(?Disertante $disertante): static
     {
         $this->disertante = $disertante;
 
@@ -183,4 +183,21 @@ class Evento
 
         return $this;
     }
+
+    public function getHoraFinalizacion(): \DateTimeInterface
+    {
+    $horaFinal = clone $this->hora;
+
+    return $horaFinal->add(
+        new \DateInterval('PT'.$this->duracion.'M')
+    );
+    }
+
+    public function __toString(): string
+    {
+    return $this->titulo;
+    }
+
+    
+
 }

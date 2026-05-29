@@ -46,7 +46,7 @@ class Disertante
     /**
      * @var Collection<int, Evento>
      */
-    #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'disertante')]
+    #[ORM\OneToMany(targetEntity: Evento::class, mappedBy: 'Disertante')]
     private Collection $eventos;
 
     public function __construct()
@@ -195,5 +195,15 @@ class Disertante
         }
 
         return $this;
+    }
+
+    public function getNombreCompleto(): string
+    {
+    return $this->nombre.' '.$this->apellido;
+    }
+
+    public function __toString(): string
+    {
+    return $this->getNombreCompleto();
     }
 }

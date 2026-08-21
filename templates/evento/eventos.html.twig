@@ -1,4 +1,9 @@
-<h1>Eventos</h1>
+
+{% extends 'frontend/layout.html.twig' %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block contenido %}
 
 {% for evento in eventos %}
 
@@ -13,11 +18,13 @@
     <br>
 
     <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
-        {{ evento.titulo }}
+        {{ evento.titulo|title }}
     </a>
 
-    <p>{{ evento.descripcion }}</p>
+    <p> {{ evento.descripcion|slice(0,150) }} </p>
 
 </div>
 
 {% endfor %}
+
+{% endblock %}

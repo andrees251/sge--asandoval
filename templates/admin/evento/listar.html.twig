@@ -1,10 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout-admin.html.twig' %}
+
 
 {% block title %}
     Gestión de Eventos
 {% endblock %}
 
 {% block body %}
+{% for mensaje in app.flashes('success') %}
+
+    <div class="alert alert-success">
+
+        {{ mensaje }}
+
+    </div>
+
+{% endfor %}
 
 <div class="container mt-4">
 

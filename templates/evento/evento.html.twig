@@ -1,9 +1,11 @@
+{% extends 'frontend/layout.html.twig' %}
+
 {% block body%}
 
 
-<h1>{{ evento.titulo }}</h1>
+<h1>{{ evento.titulo|title }}</h1>
 
-<p>{{ evento.descripcion }}</p>
+<p>{{ evento.descripcion|slice(0,150) }}</p>
 
 <div>
     <strong>Fecha:</strong>

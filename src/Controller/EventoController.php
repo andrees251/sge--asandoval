@@ -6,8 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\EventoRepository;
+use Symfony\Component\HttpFoundation\Request;
 
-final class EventoController extends AbstractController
+final class EventoController extends AbstractBaseController
 {
     #[Route('/evento', name: 'app_evento')]
     public function index(): Response
@@ -30,10 +31,12 @@ final class EventoController extends AbstractController
 
     #[Route('/evento/{slug}', name: 'app_evento_detalle')]
     public function evento(
-    string $slug,
+    Request $request,
     EventoRepository $repository
+    
     ): Response
     {
+    $slug = $request->attributes->get('slug');
     $evento = $repository->findOneBy([
         'slug' => $slug
     ]);
@@ -43,6 +46,14 @@ final class EventoController extends AbstractController
             'No existe el evento solicitado'
         );
     }
+
+    $this->addInfoMessage(
+    sprintf(
+        "Has leído sobre el evento '%s' a las %s.",
+        $evento->getTitulo(),
+        date('H:i:s')
+    )
+    );
 
     return $this->render('evento/evento.html.twig', [
         'evento' => $evento

@@ -1,4 +1,32 @@
+{% extends 'frontend/layout.html.twig' %}
+
+{% block contenido %}
+
+    <h2>Próximos eventos</h2>
+ 
+    {% for evento in eventos %}
+        {% include 'evento/_card.html.twig' with {
+            evento: evento
+        } %}
+    {% endfor %}
+
+{% endblock %}
+
+{% block body %}
+
+
+{% for mensaje in app.flashes('info') %}
+
+    <div class="alert alert-info">
+
+        {{ mensaje }}
+
+    </div>
+
+{% endfor %}
+
 <h1>Symfony 7.4 - Eventos</h1>
+
 
 <div class="row">
 
@@ -7,11 +35,12 @@
             {% for evento in eventosCol1 %}
                 <li>
                     <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
-                        {{ evento.titulo }}
+                        {{ evento.titulo|title }}
                     </a>
+                    <p>{{ evento.descripcion|slice(0,150) }}</p>
 
-                    <p>{{ evento.descripcion }}</p>
                 </li>
+
             {% else %}
                 <li>No hay eventos</li>
             {% endfor %}
@@ -21,13 +50,14 @@
     <div class="col">
         <ul>
             {% for evento in eventosCol2 %}
+
                 <li>
                     <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
-                        {{ evento.titulo }}
+                        {{ evento.titulo|title }}
                     </a>
-
-                    <p>{{ evento.descripcion }}</p>
+                    <p>{{ evento.descripcion|slice(0,150) }}</p>
                 </li>
+                
             {% else %}
                 <li>No hay eventos</li>
             {% endfor %}
@@ -35,3 +65,5 @@
     </div>
 
 </div>
+
+{% endblock %}

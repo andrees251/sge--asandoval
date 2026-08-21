@@ -6,9 +6,10 @@ use App\Repository\EventoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/admin/evento')]
-class AdminEventoController extends AbstractController
+class AdminEventoController extends AbstractAdminBaseController
 {
     
     #[Route(
@@ -84,12 +85,16 @@ class AdminEventoController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->render(
-            'admin/evento/borrar.html.twig',
-            [
-                'evento' => $evento
-            ]
-        );
+    $this->addSuccessMessage(
+    sprintf(
+        "El evento '%s' se ha borrado correctamente.",
+        $evento->getTitulo()
+    )
+    );
+
+    
+     return $this->redirectToAdmin();
+
     }
 }
 

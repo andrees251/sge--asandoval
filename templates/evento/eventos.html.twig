@@ -17,11 +17,12 @@
 
     <br>
 
-    <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
+    {% include 'evento/_card.html.twig'%}
+    {# <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
         {{ evento.titulo|title }}
     </a>
 
-    <p> {{ evento.descripcion|slice(0,150) }} </p>
+    <p> {{ evento.descripcion|slice(0,150) }} </p> #}
 
 </div>
 

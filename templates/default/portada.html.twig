@@ -34,10 +34,7 @@
         <ul>
             {% for evento in eventosCol1 %}
                 <li>
-                    <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
-                        {{ evento.titulo|title }}
-                    </a>
-                    <p>{{ evento.descripcion|slice(0,150) }}</p>
+                    {% include 'evento/_card.html.twig'%}
 
                 </li>
 
@@ -52,10 +49,7 @@
             {% for evento in eventosCol2 %}
 
                 <li>
-                    <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
-                        {{ evento.titulo|title }}
-                    </a>
-                    <p>{{ evento.descripcion|slice(0,150) }}</p>
+                    {% include 'evento/_card.html.twig'%}
                 </li>
                 
             {% else %}

@@ -23,7 +23,20 @@
         </header>
 
         <main>
-            
+            {% for message in app.flashes('success') %}
+
+            <div class="container mt-3">
+
+                <div
+                    class="alert alert-success"
+                    role="alert"
+                >
+                    {{ message }}
+                </div>
+
+            </div>
+
+            {% endfor %}
 |       </main>
 
         {% block body %}

@@ -1,6 +1,64 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /* *                                                                       * */
-/* *  FRONTEND                                                             * */
+/* *  FRONTEND                        
+    /* Tarjetas de eventos */
+.evento-card {
+    border-radius: 16px;
+    background: #ffffff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    overflow: hidden;
+}
+
+/* Efecto al pasar el mouse */
+.evento-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Horarios */
+.horario-evento {
+    display: inline-block;
+    background: #e8f0ff;
+    color: #2457c5;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border-radius: 10px;
+}
+
+/* Título de la sección */
+.container h2 {
+    color: #1e293b;
+    letter-spacing: -0.5px;
+}
+
+/* Fondo general del listado */
+.container {
+    max-width: 1200px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    padding: 16px;
+    background: #1e293b;
+    border-radius: 12px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+    color: #93c5fd;
+}
+
+
+* */
 /* *                                                                       * */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

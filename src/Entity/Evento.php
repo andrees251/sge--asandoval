@@ -52,6 +52,9 @@ class Evento
     #[ORM\Column(length: 255)]
     private ?string $estado = null;
 
+    #[ORM\Column]
+    private ?int $capacidad = null;
+
     public function __construct()
     {
         $this->usuarios = new ArrayCollection();
@@ -209,6 +212,18 @@ class Evento
     public function setEstado(string $estado): static
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    public function getCapacidad(): ?int
+    {
+        return $this->capacidad;
+    }
+
+    public function setCapacidad(?int $capacidad): static
+    {
+        $this->capacidad = $capacidad;
 
         return $this;
     }

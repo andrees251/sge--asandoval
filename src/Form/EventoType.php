@@ -46,6 +46,9 @@ class EventoType extends AbstractType
                 'class' => Disertante::class,
                 'choice_label' => 'nombre',
             ])
+            ->add('capacidad', null, [
+                'label' => 'Capacidad máxima',
+            ])
             
         ;
     }

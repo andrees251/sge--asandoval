@@ -33,29 +33,9 @@
 }
 
 /* Fondo general del listado */
-.container {
+/* .container {
     max-width: 1200px;
-}
-
-.navbar {
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    padding: 16px;
-    background: #1e293b;
-    border-radius: 12px;
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.navbar a:hover {
-    color: #93c5fd;
-}
+} */
 
 
 * */

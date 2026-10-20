@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Disertante index{% endblock %}
+
+{% block body %}
+    <h1>Disertante index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Biografia</th>
+                <th>Telefono</th>
+                <th>Calles</th>
+                <th>Url</th>
+                <th>Email</th>
+                <th>Twitter</th>
+                <th>Linkedin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for disertante in disertantes %}
+            <tr>
+                <td>{{ disertante.id }}</td>
+                <td>{{ disertante.nombre }}</td>
+                <td>{{ disertante.apellido }}</td>
+                <td>{{ disertante.biografia }}</td>
+                <td>{{ disertante.telefono }}</td>
+                <td>{{ disertante.calles }}</td>
+                <td>{{ disertante.url }}</td>
+                <td>{{ disertante.email }}</td>
+                <td>{{ disertante.twitter }}</td>
+                <td>{{ disertante.linkedin }}</td>
+                <td>
+                    <a href="{{ path('app_admin_disertante_show', {'id': disertante.id}) }}">show</a>
+                    <a href="{{ path('app_admin_disertante_edit', {'id': disertante.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_disertante_new') }}">Create new</a>
+{% endblock %}

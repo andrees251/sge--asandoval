@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Nuevo Evento
+{% endblock %}
+
+{% block body %}
+    
+
+    <div class="container mt-4"> 
+
+    
+        <div>
+            <h1>Nuevo Disertante</h1>
+
+            {{ form_start(form) }}
+
+                {{form_row(form.nombre)}}
+                {{form_row(form.apellido)}}
+                {{form_row(form.biografia)}}
+                {{form_row(form.telefono)}}
+                {{form_row(form.direccion)}}
+                {{form_row(form.url)}}
+                {{form_row(form.email)}}
+                {{form_row(form.twitter)}}
+                {{form_row(form.linkedin)}}
+
+                <button
+                type="submit"
+                class="btn btn-primary"
+                >
+                Guardar Disertante
+                </button>
+
+            {{ form_end(form) }}    
+        </div>
+
+        <div>
+            <a href="{{ path('admin_disertante_listar') }}"
+            class="btn btn-success d-inline-block w-auto">
+                Volver
+            </a>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}

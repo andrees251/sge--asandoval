@@ -1,9 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout-admin.html.twig' %}
 
-{% block title %}Disertante index{% endblock %}
+{% block title %}
+    Gestión de Disertantes
+{% endblock %}
 
 {% block body %}
-    <h1>Disertante index</h1>
+{% for mensaje in app.flashes('success') %}
+
+    <div class="alert alert-success">
+
+        {{ mensaje }}
+
+    </div>
+
+{% endfor %}
+
+
 
     <table class="table">
         <thead>
@@ -11,14 +23,9 @@
                 <th>Id</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Biografia</th>
                 <th>Telefono</th>
-                <th>Calles</th>
-                <th>Url</th>
                 <th>Email</th>
-                <th>Twitter</th>
-                <th>Linkedin</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -27,25 +34,29 @@
                 <td>{{ disertante.id }}</td>
                 <td>{{ disertante.nombre }}</td>
                 <td>{{ disertante.apellido }}</td>
-                <td>{{ disertante.biografia }}</td>
                 <td>{{ disertante.telefono }}</td>
-                <td>{{ disertante.calles }}</td>
-                <td>{{ disertante.url }}</td>
                 <td>{{ disertante.email }}</td>
-                <td>{{ disertante.twitter }}</td>
-                <td>{{ disertante.linkedin }}</td>
+
                 <td>
-                    <a href="{{ path('app_admin_disertante_show', {'id': disertante.id}) }}">show</a>
-                    <a href="{{ path('app_admin_disertante_edit', {'id': disertante.id}) }}">edit</a>
+                    <a
+                        href="{{ path(
+                            'admin_disertante_detalles',
+                            {id: disertante.id}
+                        ) }}"
+                        class="btn btn-info btn-sm"
+                    >
+                        Detalles
+                    </a>
+
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <li colspan="11">No posee disertantes</li>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_admin_disertante_new') }}">Create new</a>
+    {# <a href="{{ path('app_admin_disertante_new') }}">Crear Disertante</a> #}
 {% endblock %}

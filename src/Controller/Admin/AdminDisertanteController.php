@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Disertante;
 use App\Form\DisertanteType;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin/disertante')]
-class AdminDisertanteController extends AbstractBaseController
+class AdminDisertanteController extends AbstractAdminBaseController
 {
 
 //LISTAR DISERTANTE
@@ -25,46 +25,84 @@ class AdminDisertanteController extends AbstractBaseController
         DisertanteRepository $disertanteRepository
     ): Response
     {
-    $disertante = $disertanteRepository->findDisertantesAlfabeticamente();
+    $disertantes = $disertanteRepository->findDisertantesAlfabeticamente();
 
     
         return $this->render(
             'admin/disertante/listar.html.twig', 
             [
-                'disertantes' => $disertante
+                'disertantes' => $disertantes
             ]
 
         );
     }
 
-    #[Route('/new', name: 'app_admin_disertante_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    //BORARR
+/* 
+    #[Route(
+        '/borrar/{id}',
+        name: 'admin_disertante_borrar',
+        requirements: ['id' => '\d+']
+    )]
+    public function borrar(
+        int $id,
+        DisertanteRepository $disertanteRepository,
+        EntityManagerInterface $entityManager
+    ): Response
     {
-        $disertante = new Disertante();
-        $form = $this->createForm(DisertanteType::class, $disertante);
-        $form->handleRequest($request);
+        $disertante = $disertanteRepository->find($id);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($disertante);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_admin_disertante_index', [], Response::HTTP_SEE_OTHER);
+        if (!$disertante) {
+            throw $this->createNotFoundException(
+                'No existe el disertante solicitado.'
+            );
         }
 
-        return $this->render('admin_disertante/new.html.twig', [
-            'disertante' => $disertante,
-            'form' => $form,
-        ]);
-    }
+        $entityManager->remove($disertante);
 
-    #[Route('/{id}', name: 'app_admin_disertante_show', methods: ['GET'])]
-    public function show(Disertante $disertante): Response
+        $entityManager->flush();
+
+    $this->addSuccessMessage(
+    sprintf(
+        "El disertante '%s' se ha borrado correctamente.",
+        $disertante->getNombreCompleto()
+    )
+    );
+
+    
+     return $this->redirectToAdmin();
+
+    } */
+
+    #[Route(
+    '/detalle/{id}',
+    name: 'admin_disertante_detalles'
+    )]
+    public function disertante(
+        int $id,
+        DisertanteRepository $repository
+    ): Response
     {
-        return $this->render('admin_disertante/show.html.twig', [
-            'disertante' => $disertante,
-        ]);
+    $disertante = $repository->find($id);
+
+    if (!$disertante) {
+        throw $this->createNotFoundException(
+            'No existe el disertante solicitado'
+        );
     }
 
+    return $this->render(
+        'admin/disertante/detalles.html.twig',
+        [
+            'disertante' => $disertante
+        ]
+    );
+    }
+
+
+}
+
+/* 
     #[Route('/{id}/edit', name: 'app_admin_disertante_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Disertante $disertante, EntityManagerInterface $entityManager): Response
     {
@@ -94,3 +132,4 @@ class AdminDisertanteController extends AbstractBaseController
         return $this->redirectToRoute('app_admin_disertante_index', [], Response::HTTP_SEE_OTHER);
     }
 }
+ */

@@ -1,22 +1,72 @@
+
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    <h1>Eventos</h1>
 
-    <nav class="navbar mx-4">
-        <a href="{{ path('app_portada') }}">Inicio</a>
-        <a href="{{ path('app_eventos') }}">Eventos</a>
-        <a href="{{ path('app_disertantes') }}">Disertantes</a>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold fs-4"
+           href="{{ path('app_portada') }}">
+            Eventos
+        </a>
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarPublico"
+                aria-controls="navbarPublico"
+                aria-expanded="false"
+                aria-label="Abrir navegación">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarPublico">
+
+            <div class="navbar-nav mx-auto gap-lg-3">
+
+                <a class="nav-link fw-semibold"
+                   href="{{ path('app_portada') }}">
+                    Inicio
+                </a>
+
+                <a class="nav-link fw-semibold"
+                   href="{{ path('app_eventos') }}">
+                    Eventos
+                </a>
+
+                <a class="nav-link fw-semibold"
+                   href="{{ path('app_disertantes') }}">
+                    Disertantes
+                </a>
+
+            </div>
+
+            <div class="d-flex mt-3 mt-lg-0">
+
+                <a href="{{ path('app_login') }}"
+                   class="btn btn-outline-light rounded-pill px-4 fw-semibold">
+
+                    <i class="bi bi-box-arrow-in-right me-1"></i>
+                    Iniciar Sesión
+
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</nav>
+
 {% endblock %}
 
 {% block body %}
 
-<section>
+<section class="container py-4">
     {% block contenido %}{% endblock %}
 </section>
 
-<aside>
+<aside class="container">
     {% block lateral %}{% endblock %}
 </aside>
 

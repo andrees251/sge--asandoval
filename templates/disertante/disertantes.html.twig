@@ -1,78 +1,165 @@
-{% extends 'frontend/layout.html.twig' %}
 
+{% extends 'frontend/layout.html.twig' %}
 
 {% block body %}
 
-<h1>Disertantes</h1>
+<div class="container py-5">
 
-{% for disertante in disertantes %}
+    <div class="mb-4">
+        <h1 class="fw-bold text-primary">Disertantes</h1>
+        <p class="text-muted">
+            Conocé a nuestros disertantes y los eventos que imparten.
+        </p>
+    </div>
 
-<div>
+    <div class="row g-4">
 
-    <h2>
-        <a href="{{ path('app_disertante_detalle', {
-            'id': disertante.id
-        }) }}">
-            {{ disertante.nombreCompleto }}
-        </a>
-    </h2>
+        {% for disertante in disertantes %}
 
-    <p>{{ disertante.biografia|raw }}</p>
+            <div class="col-12">
 
-    <p>
-        <strong>Imparte los siguientes eventos:</strong>
-    </p>
+                <div class="card border-0 shadow-sm">
 
-    <ul>
+                    <div class="card-body p-4">
 
-        {% for evento in disertante.eventos %}
+                        <h3 class="card-title fw-bold mb-3">
+                            <a href="{{ path('app_disertante_detalle', {
+                                'id': disertante.id
+                            }) }}"
+                               class="text-decoration-none text-primary">
+                                {{ disertante.nombreCompleto }}
+                            </a>
+                        </h3>
 
-            <li>
-                <a href="{{ path('app_evento_detalle', {
-                    'slug': evento.slug
-                }) }}">
-                    {{ evento.titulo }}
-                </a>
-            </li>
+                        <h6 class="text-secondary fw-semibold">
+                            Biografía
+                        </h6>
+
+                        <div class="text-muted mb-4">
+                            {{ disertante.biografia|raw }}
+                        </div>
+
+                        <hr>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-7">
+
+                                <h6 class="fw-bold mb-3">
+                                    <i class="bi bi-calendar-event text-primary me-2"></i>
+                                    Eventos que imparte
+                                </h6>
+
+                                <ul class="list-group list-group-flush">
+
+                                    {% for evento in disertante.eventos %}
+
+                                        <li class="list-group-item px-0">
+                                            <i class="bi bi-arrow-right-short text-primary me-1"></i>
+
+                                            <a href="{{ path('app_evento_detalle', {
+                                                'slug': evento.slug
+                                            }) }}"
+                                               class="text-decoration-none">
+                                                {{ evento.titulo }}
+                                            </a>
+                                        </li>
+
+                                    {% else %}
+
+                                        <li class="list-group-item px-0 text-muted">
+                                            No imparte ningún evento.
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                            </div>
+
+                            <div class="col-md-5">
+
+                                <h6 class="fw-bold mb-3">
+                                    <i class="bi bi-info-circle text-primary me-2"></i>
+                                    Más información
+                                </h6>
+
+                                <div class="d-flex flex-wrap gap-2">
+
+                                    {% if disertante.twitter %}
+
+                                        <a href="{{ disertante.twitter }}"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-outline-primary btn-sm rounded-pill px-3">
+
+                                            <i class="bi bi-twitter-x me-1"></i>
+                                            Twitter
+
+                                        </a>
+
+                                    {% endif %}
+
+                                    {% if disertante.linkedin %}
+
+                                        <a href="{{ disertante.linkedin }}"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="btn btn-outline-primary btn-sm rounded-pill px-3">
+
+                                            <i class="bi bi-linkedin me-1"></i>
+                                            LinkedIn
+
+                                        </a>
+
+                                    {% endif %}
+
+                                    {% if not disertante.twitter and not disertante.linkedin %}
+
+                                        <span class="text-muted small">
+                                            No hay información adicional disponible.
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card-footer bg-light border-0 text-end py-3">
+
+                        <a href="{{ path('app_disertante_detalle', {
+                            'id': disertante.id
+                        }) }}"
+                           class="btn btn-primary btn-sm rounded-pill px-4">
+
+                            Ver detalles
+                            <i class="bi bi-arrow-right ms-1"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         {% else %}
 
-            <li>No imparte ningún evento</li>
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No hay disertantes disponibles.
+                </div>
+            </div>
 
         {% endfor %}
 
-    </ul>
+    </div>
 
 </div>
-
-<div>
-
-    <p><strong>Más información</strong></p>
-
-    <ul>
-
-        {% if disertante.twitter %}
-            <li>
-                <a href="{{ disertante.twitter }}">
-                    Twitter
-                </a>
-            </li>
-        {% endif %}
-
-        {% if disertante.linkedin %}
-            <li>
-                <a href="{{ disertante.linkedin }}">
-                    LinkedIn
-                </a>
-            </li>
-        {% endif %}
-
-    </ul>
-
-</div>
-
-<hr>
-
-{% endfor %}
 
 {% endblock %}

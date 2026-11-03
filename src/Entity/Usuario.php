@@ -40,10 +40,13 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
+    #[ORM\Column(type: 'json')]
+    private ?array $roles = [];
+
     /**
-     * @var Collection<int, evento>
+     * @var Collection<int, Evento>
      */
-    #[ORM\ManyToMany(targetEntity: evento::class, inversedBy: 'usuarios')]
+    #[ORM\ManyToMany(targetEntity: Evento::class, inversedBy: 'usuarios')]
     private Collection $evento;
 
     public function __construct()
@@ -147,7 +150,16 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        $roles = $this->roles;
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getUserIdentifier(): string
@@ -163,7 +175,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->evento;
     }
 
-    public function addEvento(evento $evento): static
+    public function addEvento(Evento $evento): static
     {
         if (!$this->evento->contains($evento)) {
             $this->evento->add($evento);
@@ -172,7 +184,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeEvento(evento $evento): static
+    public function removeEvento(Evento $evento): static
     {
         $this->evento->removeElement($evento);
 

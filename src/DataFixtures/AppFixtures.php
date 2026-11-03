@@ -202,6 +202,88 @@ class AppFixtures extends Fixture
             $manager->persist($usuario);
         }
 
+        $user = new Usuario();
+
+            $user->setNombre(
+                'Andres'
+            );
+
+            $user->setApellido(
+                'Sandoval'
+            );
+
+            $user->setDni(
+                (string) rand(20000000, 45000000)
+            );
+
+            $user->setDireccion(
+                $calles[array_rand($calles)] . ' ' . rand(100, 4000)
+            );
+
+            $user->setTelefono(
+                '0342-' . rand(4000000, 4999999)
+            );
+
+            $user->setEmail(
+                'user@gmail.com'
+            );
+
+            $user->setRoles(
+                ['ROLE_USER']
+            );
+
+            $passwordPlano= 'password';
+
+            $passwordHash = $this->passwordHasher->hashPassword(
+                $user,
+                $passwordPlano
+            );
+
+            $user->setPassword($passwordHash);
+
+            $manager->persist($user);
+
+            $admin = new Usuario();
+
+            $admin->setNombre(
+                'Usuario'
+            );
+
+            $admin->setApellido(
+                'Symfony'
+            );
+
+            $admin->setDni(
+                (string) rand(20000000, 45000000)
+            );
+
+            $admin->setDireccion(
+                $calles[array_rand($calles)] . ' ' . rand(100, 4000)
+            );
+
+            $admin->setTelefono(
+                '0342-' . rand(4000000, 4999999)
+            );
+
+            $admin->setEmail(
+                'admin@gmail.com'
+            );
+
+            $admin->setRoles(
+                ['ROLE_ADMIN']
+            );
+
+            $passwordPlano= 'admin12345678';
+
+            $passwordHash = $this->passwordHasher->hashPassword(
+                $admin,
+                $passwordPlano
+            );
+
+            $admin->setPassword($passwordHash);
+
+            $manager->persist($admin);
+
         $manager->flush();
 
         /*
@@ -232,6 +314,41 @@ class AppFixtures extends Fixture
                 'disertante' => 'antonelaToledo'
             ],
             [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
+                'titulo' => 'Twig y Formularios',
+                'hora' => '15:00:00',
+                'disertante' => 'antonelaToledo'
+            ],
+            [
                 'titulo' => 'Seguridad en Symfony 7.4',
                 'hora' => '16:30:00',
                 'disertante' => 'javierLopez'
@@ -249,6 +366,8 @@ class AppFixtures extends Fixture
             $evento->setDescripcion(
                 'Evento académico orientado al desarrollo de aplicaciones web modernas utilizando Symfony 7.4.'
             );
+
+            $evento->setCapacidad(rand(50, 200));
 
             $evento->setFecha(
                 new \DateTime('2026-06-10')

@@ -1,111 +1,133 @@
 {% extends 'admin/layout-admin.html.twig' %}
 
-
 {% block title %}
     Gestión de Eventos
 {% endblock %}
 
 {% block body %}
+
 {% for mensaje in app.flashes('success') %}
 
-    <div class="alert alert-success">
-
+    <div class="alert alert-success shadow-sm">
         {{ mensaje }}
-
     </div>
 
 {% endfor %}
 
-<div class="container mt-4">
+<div class="container py-4">
 
-    <h1>Gestión de Eventos</h1>
+    <h1 class="fw-bold text-primary mb-4">
+        Gestión de Eventos
+    </h1>
 
-    <table class="table table-bordered table-striped">
+    <div class="card shadow-sm border-0">
 
-        <thead>
-        <tr>
-            <th>Fecha/Hora</th>
-            <th>Título</th>
-            <th>Idioma</th>
-            <th>Estado</th>
-            <th>Inscriptos</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
+        <div class="card-body">
 
-        <tbody>
+            <table class="table table-striped table-hover align-middle">
 
-        {% for evento in eventos %}
+                <thead class="table-dark">
+                <tr>
+                    <th>Fecha/Hora</th>
+                    <th>Título</th>
+                    <th>Idioma</th>
+                    <th>Estado</th>
+                    <th>Inscriptos</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
 
-            <tr>
+                <tbody>
 
-                <td>
-                    {{ evento.fecha|date('d/m/Y') }}
-                    {{ evento.hora|date('H:i') }}
-                </td>
+                {% for evento in eventos %}
 
-                <td>
-                    {{ evento.titulo }}
-                </td>
+                    <tr>
 
-                <td>
-                    {{ evento.idioma }}
-                </td>
+                        <td>
+                            {{ evento.fecha|date('d/m/Y') }}
+                            <br>
+                            <small class="text-muted">
+                                {{ evento.hora|date('H:i') }}
+                            </small>
+                        </td>
 
-                <td>
-                    {{ evento.estado }}
-                </td>
+                        <td>
+                            {{ evento.titulo }}
+                        </td>
 
-                <td>
-                    {{ evento.usuarios|length }}
-                </td>
+                        <td>
+                            {{ evento.idioma }}
+                        </td>
 
-                
+                        <td>
 
-                <td>
+                            {% if evento.estado == 'Activo' %}
+                                <span class="badge bg-success">
+                                    {{ evento.estado }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary">
+                                    {{ evento.estado }}
+                                </span>
+                            {% endif %}
 
-                    <a
-                        href="{{ path(
-                            'admin_evento_inscriptos',
-                            {id: evento.id}
-                        ) }}"
-                        class="btn btn-info btn-sm"
-                    >
-                        👥 Inscriptos
-                    </a>
+                        </td>
 
-                    <a
-                        href="{{ path(
-                            'admin_evento_borrar',
-                            {id: evento.id}
-                        ) }}"
-                        class="btn btn-danger btn-sm"
-                    >
-                        🗑️ Borrar
-                    </a>
+                        <td>
+                            <span class="badge bg-primary">
+                                {{ evento.usuarios|length }}
+                            </span>
+                        </td>
 
-                </td>
+                        <td>
 
-            </tr>
+                            <a
+                                href="{{ path(
+                                    'admin_evento_inscriptos',
+                                    {id: evento.id}
+                                ) }}"
+                                class="btn btn-primary btn-sm"
+                            >
+                                👥 Inscriptos
+                            </a>
 
-        {% else %}
+                            <a
+                                href="{{ path(
+                                    'admin_evento_borrar',
+                                    {id: evento.id}
+                                ) }}"
+                                class="btn btn-danger btn-sm"
+                            >
+                                🗑️ Borrar
+                            </a>
 
-            <tr>
-                <td colspan="6">
-                    No existe ningún evento.
-                </td>
-            </tr>
+                        </td>
 
-        {% endfor %}
+                    </tr>
 
-        </tbody>
+                {% else %}
 
-    </table>
+                    <tr>
+                        <td colspan="6"
+                            class="text-center text-muted">
+                            No existe ningún evento.
+                        </td>
+                    </tr>
 
-    <a href="{{ path('admin_evento_nuevo') }}"
-       class="btn btn-success">
-        ➕ Nuevo Evento
-    </a>
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            <a href="{{ path('admin_evento_nuevo') }}"
+               class="btn btn-success">
+                ➕ Nuevo Evento
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -1,39 +1,146 @@
-<h1>{{ disertante.nombreCompleto }}</h1>
 
-<p>{{ disertante.biografia|raw }}</p>
+{% extends 'frontend/layout.html.twig' %}
 
-<p>
-    <strong>Teléfono:</strong>
-    {{ disertante.telefono }}
-</p>
+{% block body %}
 
-<p>
-    <strong>Página:</strong>
-    {{ disertante.url }}
-</p>
+<div class="container py-5">
 
-<p>
-    <strong>Imparte los siguientes eventos:</strong>
-</p>
+    <div class="row justify-content-center">
 
-<ul>
+        <div class="col-lg-8">
 
-{% for evento in disertante.eventos %}
+            <div class="card border-0 shadow-sm">
 
-    <li>
+                <div class="card-header bg-primary text-white p-4">
 
-        <a href="{{ path('app_evento_detalle', {
-            'slug': evento.slug
-        }) }}">
-            {{ evento.titulo|title }}
-        </a>
+                    <h2 class="fw-bold mb-0">
+                        <i class="bi bi-person-badge me-2"></i>
+                        {{ disertante.nombreCompleto }}
+                    </h2>
 
-    </li>
+                </div>
 
-{% else %}
+                <div class="card-body p-4">
 
-    <li>No posee eventos asignados</li>
+                    <h5 class="text-secondary fw-semibold mb-3">
+                        Biografía
+                    </h5>
 
-{% endfor %}
+                    <div class="text-muted mb-4">
+                        {{ disertante.biografia|raw }}
+                    </div>
 
-</ul>
+                    <hr>
+
+                    <div class="row g-4 mb-4">
+
+                        <div class="col-md-6">
+
+                            <div class="d-flex align-items-center gap-3">
+
+                                <i class="bi bi-telephone text-primary fs-3"></i>
+
+                                <div>
+                                    <small class="text-muted d-block">
+                                        Teléfono
+                                    </small>
+
+                                    <strong>
+                                        {{ disertante.telefono }}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="d-flex align-items-center gap-3">
+
+                                <i class="bi bi-globe text-primary fs-3"></i>
+
+                                <div>
+                                    <small class="text-muted d-block">
+                                        Página web
+                                    </small>
+
+                                    <strong>
+                                        {% if disertante.url %}
+                                            <a href="{{ disertante.url }}"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="text-decoration-none">
+                                                Visitar página
+                                            </a>
+                                        {% else %}
+                                            No disponible
+                                        {% endif %}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-calendar-event text-primary me-2"></i>
+                        Eventos que imparte
+                    </h5>
+
+                    <ul class="list-group list-group-flush">
+
+                        {% for evento in disertante.eventos %}
+
+                            <li class="list-group-item px-0">
+
+                                <i class="bi bi-arrow-right-short text-primary me-2"></i>
+
+                                <a href="{{ path('app_evento_detalle', {
+                                    'slug': evento.slug
+                                }) }}"
+                                   class="text-decoration-none fw-semibold">
+
+                                    {{ evento.titulo|title }}
+
+                                </a>
+
+                            </li>
+
+                        {% else %}
+
+                            <li class="list-group-item px-0 text-muted">
+                                No posee eventos asignados.
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                <div class="card-footer bg-white p-3">
+
+                    <a href="{{ path('app_disertantes') }}"
+                       class="btn btn-outline-primary rounded-pill px-4">
+
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Volver a disertantes
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

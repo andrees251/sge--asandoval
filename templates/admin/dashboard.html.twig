@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel Administrador{% endblock %}
+
+{% block body %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">
+            Panel de Administración
+        </h1>
+
+        <p class="lead">
+            Bienvenido {{ app.user.userIdentifier }}
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">📅 Eventos</h3>
+
+                    <p class="card-text">
+                        Gestionar eventos del sistema.
+                    </p>
+
+                    <a href="{{ path('admin_evento_listar') }}"
+                       class="btn btn-primary">
+                        Ver Eventos
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <h3 class="card-title">🎤 Disertantes</h3>
+
+                    <p class="card-text">
+                        Gestionar disertantes registrados.
+                    </p>
+
+                    <a href="{{ path('admin_disertante_listar') }}"
+                       class="btn btn-success">
+                        Ver Disertantes
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{{ path('app_logout') }}"
+           class="btn btn-danger btn-lg">
+            Cerrar Sesión
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

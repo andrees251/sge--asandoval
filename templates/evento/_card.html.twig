@@ -1,11 +1,26 @@
-<article class="evento-card">
-    <a href="{{ path('app_evento_detalle', {'slug': evento.slug}) }}">
-       <h3>
-        {{ evento.titulo|title }}
-        </h3>
-    </a>
-    <p>{{ evento.descripcion|slice(0,200) }}</p>
+<div class="card shadow-sm border-0 mb-4">
 
+    <div class="card-body">
 
+        <h4 class="card-title fw-bold text-primary">
+            {{ evento.titulo|title }}
+        </h4>
 
-</article>
+        <p class="card-text text-muted">
+            {{ evento.descripcion|slice(0, 200) }}
+            {% if evento.descripcion|length > 200 %}
+                ...
+            {% endif %}
+        </p>
+
+        <a href="{{ path(
+            'app_evento_detalle',
+            {'slug': evento.slug}
+        ) }}"
+           class="btn btn-primary">
+            Ver Detalles
+        </a>
+
+    </div>
+
+</div>

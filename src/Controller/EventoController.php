@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Evento;
+use App\Service\EventoDisponibilidadService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,24 +12,42 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class EventoController extends AbstractBaseController
 {
-    #[Route('/evento', name: 'app_evento')]
-    public function index(): Response
-    {
-        return $this->render('evento/index.html.twig', [
-            'controller_name' => 'EventoController',
-        ]);
-    }
 
-    #[Route('/eventos', name: 'app_eventos')]
-    public function eventos(EventoRepository $repository): Response
-    {
-        
-    $eventos = $repository->findEventosAlfabeticamente();
+
+    
+#[Route('/eventos', name: 'app_eventos')]
+public function eventos(
+    Request $request,
+    EventoRepository $repository,
+    EventoDisponibilidadService $disponibilidadService
+): Response {
+
+    // Cantidad de eventos que se mostrarán por página
+    $limite = 6;
+
+    // Obtenemos el número de página desde la URL
+    $pagina = max(1, $request->query->getInt('page', 1));
+
+    // Contamos todos los eventos
+    $totalEventos = $repository->contarEventos();
+
+    // Calculamos cuántas páginas necesitamos
+    $totalPaginas = max(1, (int) ceil($totalEventos / $limite));
+
+    // Evitamos que se solicite una página inexistente
+    $pagina = min($pagina, $totalPaginas);
+
+    // Obtenemos solamente los eventos de la página actual
+    $eventos = $repository->findEventosAlfabeticamente($pagina, $limite);
 
     return $this->render('evento/eventos.html.twig', [
-        'eventos' => $eventos
+        'eventos' => $eventos,
+        'disponibilidadService' => $disponibilidadService,
+        'paginaActual' => $pagina,
+        'totalPaginas' => $totalPaginas
     ]);
-    }
+}
+
 
     #[Route('/evento/{slug}', name: 'app_evento_detalle')]
     public function evento(
@@ -58,6 +78,23 @@ final class EventoController extends AbstractBaseController
     return $this->render('evento/evento.html.twig', [
         'evento' => $evento
     ]);
+    }
+
+    #[Route('/evento/{id}/disponibilidad', name: 'evento_disponibilidad')]
+    public function disponibilidad(
+        Evento $evento,
+        EventoDisponibilidadService $disponibilidadService
+    ): Response {
+        $mensaje = $disponibilidadService
+        ->obtenerMensaje($evento);
+
+        return $this->render(
+            'evento/disponibilidad.html.twig',
+            [
+                'evento' => $evento,
+                'mensaje' => $mensaje,
+            ]
+        );
     }
 
 }

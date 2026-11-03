@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: DisertanteRepository::class)]
 class Disertante
@@ -18,17 +18,12 @@ class Disertante
     private ?int $id = null;
 
 #[ORM\Column(length: 255)]
-#[Assert\NotBlank(message: 'El nombre es obligatorio.')]
-#[Assert\Length(
-    min: 2,
-    minMessage: 'El nombre debe tener al menos 2 caracteres.')]
+
 private ?string $nombre = null;
 
 #[ORM\Column(length: 255)]
-#[Assert\NotBlank(message: 'El apellido es obligatorio.')]
-#[Assert\Length(
-    min: 2, 
-    minMessage: 'El apellido debe tener al menos 2 caracteres.')]
+
+
 private ?string $apellido = null;
 
     #[ORM\Column(type: Types::TEXT)]

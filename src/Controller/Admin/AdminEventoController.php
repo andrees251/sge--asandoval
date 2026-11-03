@@ -24,7 +24,7 @@ class AdminEventoController extends AbstractAdminBaseController
         EventoRepository $eventoRepository
     ): Response
     {
-    $eventos = $eventoRepository->findEventosAlfabeticamente();
+    $eventos = $eventoRepository->findTodosAlfabeticamente();
 
     return $this->render(
         'admin/evento/listar.html.twig',

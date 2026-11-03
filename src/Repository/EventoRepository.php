@@ -16,13 +16,34 @@ class EventoRepository extends ServiceEntityRepository
         parent::__construct($registry, Evento::class);
     }
 
-    public function findEventosAlfabeticamente(): array
+    public function findEventosAlfabeticamente(int $pagina, int $limite): array
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.titulo', 'ASC')
+            ->setFirstResult(($pagina - 1) * $limite)
+            ->setMaxResults($limite)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function contarEventos(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function findTodosAlfabeticamente(): array
     {
     return $this->createQueryBuilder('e')
         ->orderBy('e.titulo', 'ASC')
         ->getQuery()
         ->getResult();
     }
+        
+
+
 
     //    /**
     //     * @return Evento[] Returns an array of Evento objects
